@@ -1,0 +1,21 @@
+{
+    "Modules":[
+        {
+            "Name":"Pester"
+        },
+        {
+            "Name":"InvokeBuild"
+        },
+        {
+            "Name":"PSScriptAnalyzer"
+        },
+        {
+            "Name":"DscResourceTestHelper",
+            "RequiredVersion":"0.2.0.0"
+        }
+    ],
+    "TestOrder":[
+        "MyProject2",
+        "PSHitchhiker"
+    ]
+}

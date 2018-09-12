@@ -1,8 +1,4 @@
-# PublishInternalModule
-
-This is use for NuGet build process
-
-Find-Module -Repository "LocalNuGetFeed"
+http://duffney.io/GettingStartedWithInvokeBuild
 https://kevinmarquette.github.io/2018-03-06-Powershell-Managing-community-modules/
 
 Pre-requisite:
