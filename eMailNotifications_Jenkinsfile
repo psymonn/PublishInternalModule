@@ -2,7 +2,7 @@
 
 class Globals {
 
-   static String GitRepo = 'https://github.com/blabla/PublishInternalModule.git'
+   static String GitRepo = 'https://github.com/psymonn/PublishInternalModule.git'
    static String ModuleName = 'PublishInternalModule'
    static String eMail = 'report.email@gmail.com'
 
@@ -20,13 +20,13 @@ node('master') {
 
 	stage('Stage 2: eMail notify2') {
 		notify2('STARTED2')
-		notify2(currentBuild.result)  
+		notify2(currentBuild.result)
 	}
 
 	stage('Stage 3: eMail notify3') {
 		notify3()
 		//notify3(currentBuild.result)
-		notify3(null)  
+		notify3(null)
 	}
 
 }
