@@ -11,7 +11,6 @@ class Globals {
 }
 
 
-
 // Workflow Steps
 
 node('master') {
