@@ -2,11 +2,11 @@
 
 class Globals {
 
-   static String GitRepo = 'https://github.com/psymonn/PublishInternalModule.git'
+   static String GitRepo = 'https://github.com/blabla/PublishInternalModule.git'
 
    static String ModuleName = 'PublishInternalModule'
 
-   static String JenkinsChannel = '#jenkins-channel'
+   static String eMail = 'report.email@gmail.com'
 
 }
 
@@ -93,31 +93,13 @@ def posh(cmd) {
 }
 
 
-
-// Helper function to Broadcast Build to Slack
-
-def notifyBuild(String buildStatus = 'STARTED') {
-
-
-
-  buildStatus = buildStatus ?: 'SUCCESSFUL'
-
-
-
-  def colorCode = '#FF0000' // Failed : Red
-
-  if (buildStatus == 'STARTED') { colorCode = '#FFFF00' } // STARTED: Yellow
-
-  else if (buildStatus == 'SUCCESSFUL') { colorCode = '#00FF00' } // SUCCESSFUL: Green
-
-
-
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-
-  def summary = "${subject} (${env.BUILD_URL})"
-
-
-
-  //slackSend (color: colorCode, channel: "${Globals.JenkinsChannel}", message: summary)
-
+// eMail Notification
+def notifyBuild(status){
+    status = status ?: 'SUCCESSFUL'
+    emailext (
+      to: "${Globals.eMail}",
+      subject: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+               <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
+    )
 }
