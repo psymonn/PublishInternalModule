@@ -1,0 +1,75 @@
+// Config
+
+class Globals {
+
+   static String GitRepo = 'https://github.com/blabla/PublishInternalModule.git'
+   static String ModuleName = 'PublishInternalModule'
+   static String eMail = 'report.email@gmail.com'
+
+}
+
+
+// Workflow Steps
+
+node('master') {
+
+	stage('Stage 1: eMail notify1') {
+		notify1('STARTED1')
+		notify1(currentBuild.result)
+	}
+
+	stage('Stage 2: eMail notify2') {
+		notify2('STARTED2')
+		notify2(currentBuild.result)  
+	}
+
+	stage('Stage 3: eMail notify3') {
+		notify3()
+		//notify3(currentBuild.result)
+		notify3(null)  
+	}
+
+}
+
+def notify1(status){
+    status = status ?: 'SUCCESSFUL1'
+    emailext (
+      to: "report.email@gmail.com",
+      subject: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+               <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
+    )
+}
+
+def notify2(String buildStatus = 'STARTED') {
+  buildStatus = buildStatus ?: 'SUCCESSFUL2'
+  def colorCode = '#FF0000' // Failed : Red
+  if (buildStatus == 'STARTED') { colorCode = '#FFFF00' } // STARTED: Yellow
+  else if (buildStatus == 'SUCCESSFUL') { colorCode = '#00FF00' } // SUCCESSFUL: Green
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def to = "${Globals.eMail}"
+  def body = """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>"""
+  emailext (to: to, color: colorCode, subject: subject, body: body)
+}
+
+
+def notify3(String buildStatus = 'STARTED3') {
+
+  //If buildStatus is null assign 'SUCCESSFUL3' to buildStatus
+  buildStatus = buildStatus ?: 'SUCCESSFUL3'
+  def colorCode = '#FF0000' // Failed : Red
+
+  if (buildStatus == 'STARTED') { colorCode = '#FFFF00' } // STARTED: Yellow
+  else if (buildStatus == 'SUCCESSFUL') { colorCode = '#00FF00' } // SUCCESSFUL: Green
+
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+
+  emailext (
+      to: "${Globals.eMail}",
+      subject: "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+        <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
+  )
+}
