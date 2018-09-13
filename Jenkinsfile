@@ -2,7 +2,7 @@
 
 class Globals {
 
-   static String GitRepo = 'https://github.com/blabla/PublishInternalModule.git'
+   static String GitRepo = 'https://github.com/psymonn/PublishInternalModule.git'
 
    static String ModuleName = 'PublishInternalModule'
 
@@ -49,14 +49,14 @@ node('master') {
       posh 'Invoke-Build ImportDependency'
 
     }
-        
+
     stage('Stage 3: Test') {
 
       posh 'Invoke-Build RunTests'
 
     }
 
-    
+
     stage('Stage 5: Publish') {
 
       timeout(20) {
