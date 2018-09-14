@@ -1,5 +1,8 @@
 # PublishInternalModule
 
+Getting Started with Invoke-Build:
+http://duffney.io/GettingStartedWithInvokeBuild
+
 This is use for NuGet build process
 
 Find-Module -Repository "LocalNuGetFeed"
